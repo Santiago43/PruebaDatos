@@ -37,8 +37,8 @@ public class LocalizacionController {
     }
     
     @PutMapping("/{id}")
-    public Boolean put(@PathVariable String id, @RequestBody Object input) {
-        return service.update(Integer.parseInt(id),(Localizacion)input);
+    public Boolean put(@PathVariable String id, @RequestBody Localizacion input) {
+        return service.update(Integer.parseInt(id),input);
     }
     
     @PostMapping

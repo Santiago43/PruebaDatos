@@ -48,6 +48,7 @@ public class UsuarioService {
             if(usuario.getLocalizacion()!=null){
                 u.get().setLocalizacion(usuario.getLocalizacion());
             }
+            repo.save(u.get());
             return true;
         }
         return false;

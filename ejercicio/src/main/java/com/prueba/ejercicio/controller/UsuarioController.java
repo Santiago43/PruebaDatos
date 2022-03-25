@@ -4,7 +4,7 @@ import com.prueba.ejercicio.model.Usuario;
 import com.prueba.ejercicio.service.UsuarioService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Controlador de usuarios
  * @author Santiago Pérez
  * @since 2022-03-24
  */
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
@@ -35,8 +37,8 @@ public class UsuarioController {
     }
     
     @PutMapping("/{id}")
-    public Boolean put(@PathVariable String id, @RequestBody Object input) {
-        return service.update(Integer.parseInt(id),(Usuario) input);
+    public Boolean put(@PathVariable String id, @RequestBody Usuario input) {
+        return service.update(Integer.parseInt(id),input);
     }
     
     @PostMapping

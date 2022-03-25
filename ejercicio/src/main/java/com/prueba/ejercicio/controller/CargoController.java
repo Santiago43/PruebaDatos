@@ -39,8 +39,8 @@ public class CargoController {
     }
     
     @PutMapping("/{id}")
-    public Boolean put(@PathVariable String id, @RequestBody Object input) {
-        return service.update(Integer.parseInt(id),(Cargo)input);
+    public Boolean put(@PathVariable String id, @RequestBody Cargo input) {
+        return service.update(Integer.parseInt(id),input);
     }
     
     @PostMapping
