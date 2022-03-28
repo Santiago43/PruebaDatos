@@ -1,6 +1,8 @@
 package com.prueba.ejercicio.repository;
 import com.prueba.ejercicio.interfaces.ICargoRepository;
+import com.prueba.ejercicio.interfaces.IUsuarioRepository;
 import com.prueba.ejercicio.model.Cargo;
+import com.prueba.ejercicio.model.Usuario;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Repository;
 public class CargoRepository {
     @Autowired
     private ICargoRepository crud;
+    
     public List<Cargo> getAll(){
         return (List<Cargo>) crud.findAll();
     }

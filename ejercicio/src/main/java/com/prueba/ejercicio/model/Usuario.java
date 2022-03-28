@@ -1,6 +1,7 @@
 package com.prueba.ejercicio.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,13 +17,14 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="usuario")
-public class Usuario {
+public class Usuario implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String identificacion;
     private String nombres;
     private String apellidos;
+    private String contrasena;
     @ManyToOne
     @JoinColumn(name="localizacion_id")
     @JsonIgnoreProperties("usuarios")
@@ -87,6 +89,14 @@ public class Usuario {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
     
 }

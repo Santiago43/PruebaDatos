@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name="cargo")
 public class Cargo {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false)
     private String cargo;

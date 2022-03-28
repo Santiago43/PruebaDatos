@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Table(name="localizacion")
 public class Localizacion {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable=false)
     private String localizacion;

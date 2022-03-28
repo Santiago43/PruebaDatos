@@ -29,5 +29,16 @@ public class UsuarioRepository {
    public void delete(Usuario usuario){
        crud.delete(usuario);
     }
+   public List<Usuario> getAllUsuariosByCargo(Integer cargoId){
+       return crud.getAllWhereCargoIdEqualsTo(cargoId);
+   }
+
+    public Usuario login(Usuario u) {
+        return crud.login(u.getIdentificacion(),u.getContrasena());
+    }
+
+    public List<Usuario> getAllUsuariosByLocalizacion(Integer localizacionId) {
+       return crud.getAllWhereLocalizacionIdEqualsTo(localizacionId);
+    }
     
 }

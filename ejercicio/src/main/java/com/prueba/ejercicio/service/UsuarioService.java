@@ -62,4 +62,14 @@ public class UsuarioService {
         }
         return false;
     }
+    public List<Usuario> getAllUsuariosByCargo(Integer cargoId){
+        return repo.getAllUsuariosByCargo(cargoId);
+    }
+    public Usuario login(Usuario u){
+        return repo.login(u);
+    }
+
+    public List<Usuario> getAllUsuariosByLocalizacion(Integer localizacionId) {
+        return repo.getAllUsuariosByLocalizacion(localizacionId);
+    }
 }

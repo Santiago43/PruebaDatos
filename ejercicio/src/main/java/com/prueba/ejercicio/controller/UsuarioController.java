@@ -50,4 +50,19 @@ public class UsuarioController {
     public Boolean delete(@PathVariable String id) {
         return service.delete(Integer.parseInt(id));
     }
+    
+    @GetMapping("/cargo/{id}")
+    public List<Usuario> getByCargo(@PathVariable String id){
+        return service.getAllUsuariosByCargo(Integer.parseInt(id));
+    }
+    
+    @GetMapping("/localizacion/{id}")
+    public List<Usuario> getByLocalizacion(@PathVariable String id){
+        return service.getAllUsuariosByLocalizacion(Integer.parseInt(id));
+    }
+    
+    @PostMapping("/login")
+    public Usuario login(@RequestBody Usuario input){
+        return service.login(input);
+    }
 }
