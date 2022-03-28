@@ -16,7 +16,8 @@ class ModalUsuario extends React.Component {
         : "",
       cargo: this.props.usuario ? this.props.usuario.cargo : {},
       localizacion: this.props.usuario ? this.props.usuario.localizacion : {},
-      estado: this.props.usuario ? this.props.usuario.estado : "",
+      estado: this.props.usuario ? this.props.usuario.estado : "Activo",
+      contrasena: "",
     },
   };
   handleClose = () => this.setState({ show: false });
@@ -50,8 +51,13 @@ class ModalUsuario extends React.Component {
   }
   handleSubmit(e, type, usuario) {
     e.preventDefault();
+    let copyUsuario = usuario;
+    delete copyUsuario.estado;
     if (type === "Crear Usuario") {
-      service
+      
+      let valor = Functions.validateFieldsNoEmpty(copyUsuario);
+      if(valor){
+        service
         .create(usuario)
         .then((response) => {
           alert("usuario creado");
@@ -65,29 +71,37 @@ class ModalUsuario extends React.Component {
               identificacion: "",
               cargo: {},
               localizacion: {},
-              estado: "",
+              estado: "Activo",
             },
           });
         })
         .catch((err) => {
           console.log(err);
-        });
+        });  
+      }
+      else{
+        alert(`Campos inválidos. Tenga en cuenta que debe llenar los campos\n
+        Nombres, Apellidos, Identificación, Cargo y Localización`);
+      }
     } else if (type === "Editar Usuario") {
-      service
-        .update(usuario.id, usuario)
-        .then((response) => {
-          if (response.data) {
-            alert("Usuario actualizado");
+      let valor = Functions.validateFieldsNoEmpty(copyUsuario);
+      if(valor){
+        service
+          .update(usuario.id, usuario)
+          .then((response) => {
+            if (response.data) {
+              alert("Usuario actualizado");
 
-            this.props.getUsuarios();
-            this.handleClose();
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+              this.props.getUsuarios();
+              this.handleClose();
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     }
   }
+}
   closeModal() {
     if (this.props.title === "Crear usuario") {
       this.setState({
@@ -98,7 +112,8 @@ class ModalUsuario extends React.Component {
           identificacion: "",
           cargo: {},
           localizacion: {},
-          estado: "",
+          estado: "Activo",
+          contrasena:""
         },
       });
     }
@@ -288,6 +303,20 @@ class ModalUsuario extends React.Component {
                     Inactivo
                   </label>
                 </div>
+                <div className="col-md-12">
+                <label htmlFor="contrasena" className="p3">
+                  Contraseña
+                </label>
+                <input
+                  type="password"
+                  name="contrasena"
+                  id="contrasena"
+                  className="form-control"
+                  value={this.state.usuario.contrasena}
+                  onChange={(e) => this.handleInput(e, "contrasena")}
+                  onClick={(e) => this.handleClick(e, "contrasena")}
+                />
+              </div>
               </div>
             </form>
           </Modal.Body>

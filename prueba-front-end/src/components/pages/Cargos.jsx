@@ -1,6 +1,7 @@
 import React from "react";
 import service from "../../services/CargoService";
 import ModalCargo from "../shared/ModalCargo";
+import usuarioService from "../../services/UsuarioService";
 class Cargos extends React.Component{
     state = {
         cargos: []
@@ -16,21 +17,29 @@ class Cargos extends React.Component{
     };
     handleRemove(cargo, index, e){
         e.preventDefault();
-        let opc = window.confirm(
+        usuarioService.usuariosConCargo(cargo.id).then((response)=>{
+          if(response.data.length===0){  
+          let opc = window.confirm(
             "¿Está seguro de que desea eliminar el cargo?"
           );
           if (opc) {
             service.remove(cargo.id)
-              .then((response) => {
-                if (response.status === 204) {
-                  alert("Cargo eliminado");
-                  this.getCargos();
-                }
-              })
-              .catch((err) => {
-                console.log(err);
-              });
+          .then((response) => {
+            if (response.data) {
+              alert("Cargo eliminado");
+              this.getCargos();
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
           }
+        }else{
+            alert("No se puede eliminar el cargo porque tiene usuarios asociados");
+          }
+        }).catch((err)=>{
+          console.log(err);
+        })
     };
     componentDidMount(){
         this.getCargos();

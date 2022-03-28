@@ -10,7 +10,7 @@ class ModalLocalizacion extends React.Component {
         localizacion:{
             id:this.props.localizacion?this.props.localizacion.id:undefined,
             localizacion:this.props.localizacion?this.props.localizacion.localizacion:"",
-            estado:this.props.localizacion?this.props.localizacion.estado:""
+            estado:this.props.localizacion?this.props.localizacion.estado:"Activo"
         }
     }
     handleClose = () => this.setState({ show: false });
@@ -39,35 +39,44 @@ class ModalLocalizacion extends React.Component {
         this.setState({ localizacion: newLocalizacion });
       }
       handleSubmit(e, type, localizacion) {
-        if (type === "Crear Localización") {
-          service.create(localizacion)
-            .then((response) => {
-              alert("Localización creada");
-              this.handleClose();
-              this.props.getLocalizaciones();
-              this.setState({
-                localizacion:{
-                    id:0,
-                    localizacion:"",
-                    estado:""
-                },
+        e.preventDefault();
+        let copyLocalizacion = localizacion;
+        delete copyLocalizacion.estado;
+        let valor= Functions.validateFieldsNoEmpty(copyLocalizacion);
+        if (valor) {
+          if (type === "Crear Localización") {
+            service.create(localizacion)
+              .then((response) => {
+                alert("Localización creada");
+                this.handleClose();
+                this.props.getLocalizaciones();
+                this.setState({
+                  localizacion:{
+                      id:0,
+                      localizacion:"",
+                      estado:""
+                  },
+                });
+              })
+              .catch((err) => {
+                console.log(err);
               });
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        } else if (type === "Editar Localización") {
-          service.update(localizacion.id,localizacion)
-            .then((response) => {
-              alert("Localización actualizada");
-    
-              this.props.getLocalizaciones();
-              this.handleClose();
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+          } else if (type === "Editar Localización") {
+            service.update(localizacion.id,localizacion)
+              .then((response) => {
+                alert("Localización actualizada");
+      
+                this.props.getLocalizaciones();
+                this.handleClose();
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
         }
+          else{
+            alert(`Campos inválidos. Tenga en cuenta que debe llenar el campo de localización\n`);
+          }
       }
       closeModal() {
         if (this.props.title === "Crear Localización") {

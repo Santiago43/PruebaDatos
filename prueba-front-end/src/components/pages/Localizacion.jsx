@@ -1,6 +1,7 @@
 import React from "react";
 import service from "../../services/LocalizacionService";
 import ModalLocalizacion from "../shared/ModalLocalizacion";
+import usuarioService from "../../services/UsuarioService";
 class Localizacion extends React.Component {
   state = {
     localizaciones: [],
@@ -19,22 +20,29 @@ class Localizacion extends React.Component {
       });
   };
   handleRemove(localizacion) {
-    let opc = window.confirm(
-      "¿Está seguro de que desea eliminar la localización ?"
-    );
-    if (opc) {
-      service
-        .remove(localizacion.id)
-        .then((response) => {
-          if (response.data === true) {
-            alert("Localización eliminada");
-            this.getLocalizaciones();
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    usuarioService.usuariosConLocalizacion(localizacion.id).then((response) => {
+      if (response.data.length === 0) {
+        let opc = window.confirm(
+          "¿Está seguro de que desea eliminar la localización ?"
+        );
+        if (opc) {
+          service
+            .remove(localizacion.id)
+            .then((response) => {
+              if (response.data === true) {
+                alert("Localización eliminada");
+                this.getLocalizaciones();
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      } else {
+        alert("No se puede eliminar la localización porque tiene usuarios asociados");
+      }}).catch((err)=>{
+        console.log(err);
+      });
   }
   componentDidMount() {
     this.getLocalizaciones();

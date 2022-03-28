@@ -20,11 +20,24 @@ const remove = (id) => {
   return http.delete(`/usuario/${id}`);
 };
 
+const login =(identificacion,password)=>{
+  return http.post(`/usuario/login`,{identificacion:identificacion,contrasena:password});
+}
+
+const usuariosConCargo = (cargoId) => {
+  return http.get(`/usuario/cargo/${cargoId}`);
+}
+const usuariosConLocalizacion = (localizacionId)=>{
+  return http.get(`/usuario/localizacion/${localizacionId}`);
+}
 const exportedObject = {
   getAll,
   get,
   create,
   update,
-  remove
+  remove,
+  login,
+  usuariosConCargo,
+  usuariosConLocalizacion
 };
 export default exportedObject;

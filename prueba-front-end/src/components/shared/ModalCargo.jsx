@@ -9,7 +9,7 @@ class ModalCargo extends React.Component{
         cargo:{
             id:this.props.cargo?this.props.cargo.id:undefined,
             cargo:this.props.cargo?this.props.cargo.cargo:"",
-            estado:this.props.cargo?this.props.cargo.estado:""
+            estado:this.props.cargo?this.props.cargo.estado:"Activo"
         }
     }
     handleClose = () => this.setState({ show: false });
@@ -38,35 +38,44 @@ class ModalCargo extends React.Component{
         this.setState({ cargo: newcargo });
       }
       handleSubmit(e, type, cargo) {
-        if (type === "Crear Cargo") {
-          service.create(cargo)
-            .then((response) => {
-              alert("Cargo creado");
-              this.handleClose();
-              this.props.getCargos();
-              this.setState({
-                cargo:{
-                    id:0,
-                    cargo:"",
-                    estado:""
-                },
+        e.preventDefault();
+        let copyCargo = cargo;
+        delete copyCargo.estado;
+        let valor = Functions.validateFieldsNoEmpty(copyCargo);
+        if(valor){
+          if (type === "Crear Cargo") {
+            service.create(cargo)
+              .then((response) => {
+                alert("Cargo creado");
+                this.handleClose();
+                this.props.getCargos();
+                this.setState({
+                  cargo:{
+                      id:0,
+                      cargo:"",
+                      estado:""
+                  },
+                });
+              })
+              .catch((err) => {
+                console.log(err);
               });
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        } else if (type === "Editar Cargo") {
-          service.update(cargo.id,cargo)
-            .then((response) => {
-              alert("Cargo actualizado");
-    
-              this.props.getCargos();
-              this.handleClose();
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+          } else if (type === "Editar Cargo") {
+            service.update(cargo.id,cargo)
+              .then((response) => {
+                alert("Cargo actualizado");
+      
+                this.props.getCargos();
+                this.handleClose();
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        }else{
+          alert("Campos inválidos. Tenga en cuenta que debe llenar el campo de cargo");
         }
+        
       }
       closeModal() {
         if (this.props.title === "Crear Cargo") {
