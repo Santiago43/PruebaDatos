@@ -301,8 +301,10 @@ class ModalUsuario extends React.Component {
                     Inactivo
                   </label>
                 </div>
-                <div className="col-md-12">
-                <label htmlFor="contrasena" className="p3">
+                
+              </div>
+              <div className="col-md-12">
+                <label htmlFor="contrasena" className="p1">
                   Contraseña
                 </label>
                 <input
@@ -314,7 +316,6 @@ class ModalUsuario extends React.Component {
                   onChange={(e) => this.handleInput(e, "contrasena")}
                   onClick={(e) => this.handleClick(e, "contrasena")}
                 />
-              </div>
               </div>
             </form>
           </Modal.Body>
