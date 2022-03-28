@@ -40,7 +40,6 @@ class ModalCargo extends React.Component{
       handleSubmit(e, type, cargo) {
         e.preventDefault();
         let copyCargo = cargo;
-        delete copyCargo.estado;
         let valor = Functions.validateFieldsNoEmpty(copyCargo);
         if(valor){
           if (type === "Crear Cargo") {
@@ -53,7 +52,7 @@ class ModalCargo extends React.Component{
                   cargo:{
                       id:0,
                       cargo:"",
-                      estado:""
+                      estado:"Activo"
                   },
                 });
               })
@@ -83,7 +82,7 @@ class ModalCargo extends React.Component{
             cargo:{
                 id:0,
                 cargo:"",
-                estado:""
+                estado:"Activo"
             },
           });
           

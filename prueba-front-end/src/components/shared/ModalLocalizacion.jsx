@@ -41,7 +41,6 @@ class ModalLocalizacion extends React.Component {
       handleSubmit(e, type, localizacion) {
         e.preventDefault();
         let copyLocalizacion = localizacion;
-        delete copyLocalizacion.estado;
         let valor= Functions.validateFieldsNoEmpty(copyLocalizacion);
         if (valor) {
           if (type === "Crear Localización") {
@@ -54,7 +53,7 @@ class ModalLocalizacion extends React.Component {
                   localizacion:{
                       id:0,
                       localizacion:"",
-                      estado:""
+                      estado:"Activo"
                   },
                 });
               })

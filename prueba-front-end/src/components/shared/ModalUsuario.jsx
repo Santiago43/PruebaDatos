@@ -52,9 +52,7 @@ class ModalUsuario extends React.Component {
   handleSubmit(e, type, usuario) {
     e.preventDefault();
     let copyUsuario = usuario;
-    delete copyUsuario.estado;
     if (type === "Crear Usuario") {
-      
       let valor = Functions.validateFieldsNoEmpty(copyUsuario);
       if(valor){
         service
